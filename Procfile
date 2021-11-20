@@ -1,1 +1,1 @@
-web : gunicorn simple-jwt-django.wsgi
+web : gunicorn assignment1.wsgi
