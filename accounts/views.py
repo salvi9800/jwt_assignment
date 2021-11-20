@@ -9,6 +9,7 @@ from rest_framework.decorators import authentication_classes, permission_classes
 from .serializers import UserRegistrationSerializer, UserLoginSerializer
 from rest_framework_simplejwt.tokens import RefreshToken, AccessToken
 from rest_framework.views import APIView
+from rest_framework.decorators import api_view
 from .models import User
 
 class UserRegistrationView(CreateAPIView):
@@ -91,3 +92,24 @@ class BlacklistRefreshView(APIView):
             return Response("Success")
         except rest_framework_simplejwt.exceptions.TokenError:
             return Response("Token is blacklisted")
+        
+@api_view(['GET'])
+def userList(request):
+    users = User.objects.all()
+    serializer = UserSerializer(users, many=True)
+    return Response(serializer.data)
+
+@api_view(['POST'])
+def userUpdate(request, pk):
+    user = User.objects.get(id=pk)
+    serializer = UserSerializer(instance=user, data=request.data)
+
+    if serializer.is_valid():
+        serializer.save()
+    return Response(serializer.data)
+
+@api_view(['DELETE'])
+def user_Delete(request, pk):
+    user = User.objects.get(id=pk)
+    user.delete()
+    return Response('Deleted.')
