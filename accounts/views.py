@@ -93,13 +93,10 @@ class BlacklistRefreshView(APIView):
         except rest_framework_simplejwt.exceptions.TokenError:
             return Response("Token is blacklisted")
         
-@api_view(['GET'])
-def userList(request):
-    users = User.objects.all()
-    serializer = UserSerializer(users, many=True)
-    return Response(serializer.data)
 
 @api_view(['POST'])
+@permission_classes([IsAuthenticated])
+@authentication_class([JWTAuthentication])
 def userUpdate(request, pk):
     user = User.objects.get(id=pk)
     serializer = UserSerializer(instance=user, data=request.data)
@@ -109,6 +106,8 @@ def userUpdate(request, pk):
     return Response(serializer.data)
 
 @api_view(['DELETE'])
+@permission_classes([IsAuthenticated])
+@authentication_class([JWTAuthentication])
 def user_Delete(request, pk):
     user = User.objects.get(id=pk)
     user.delete()
