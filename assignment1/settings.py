@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
+import django_heroku
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -25,7 +26,8 @@ SECRET_KEY = 'django-insecure-#o@v6kn_13woopt=s61%!##(1cvgmv&0k*solyawnf%cucn^iv
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+#ALLOWED_HOSTS = ['simple-jwt-django.herokuapp', '127.0.0.1:']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -167,4 +169,6 @@ SIMPLE_JWT = {
 
     'JTI_CLAIM': 'jti',
 
-   
+}
+
+django_heroku.settings(locals())
