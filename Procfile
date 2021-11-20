@@ -1,1 +1,1 @@
-web : gunicorn simple-jwt-django.wsgi --log-file -
+web : gunicorn simple-jwt-django.wsgi
