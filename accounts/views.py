@@ -96,7 +96,6 @@ class BlacklistRefreshView(APIView):
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
-@authentication_class([JWTAuthentication])
 def userUpdate(request, pk):
     user = User.objects.get(id=pk)
     serializer = UserSerializer(instance=user, data=request.data)
@@ -107,7 +106,6 @@ def userUpdate(request, pk):
 
 @api_view(['DELETE'])
 @permission_classes([IsAuthenticated])
-@authentication_class([JWTAuthentication])
 def user_Delete(request, pk):
     user = User.objects.get(id=pk)
     user.delete()
